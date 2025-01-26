@@ -1,18 +1,15 @@
 package model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
 public class Transaction {
 
-    private enum Type {
-        TAKE,
-        GIVE_BACK
-    }
-
-    private Type type;
+    private String type;
 
     private LocalDateTime timeOfOperation;
 

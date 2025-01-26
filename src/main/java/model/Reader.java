@@ -7,16 +7,11 @@ import java.time.LocalDate;
 @Data
 public class Reader {
 
-    private enum Gender {
-        MALE,
-        FEMALE
-    }
-
     private String firstName;
 
     private String lastName;
 
-    private Gender gender;
+    private String gender;
 
     private LocalDate dateOfBirth;
 
