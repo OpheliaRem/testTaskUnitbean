@@ -17,7 +17,7 @@ public interface ReaderRepository extends JpaRepository<Reader, Long> {
                     "r.date_of_birth, " +
                     "r.phone_number" +
                     " from readers r " +
-                    "where r.id = (select count(*) " +
+                    "where r.id = (select reader_id " +
                     "from transactions t where t.type = 'take' group by t.reader_id" +
                     " order by count(*) desc limit 1) ",
             nativeQuery = true
