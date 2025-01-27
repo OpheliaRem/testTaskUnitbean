@@ -1,6 +1,6 @@
-package services;
+package org.example.testtask.services;
 
-import model.Book;
+import org.example.testtask.model.Book;
 
 import java.util.List;
 

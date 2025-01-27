@@ -1,14 +1,11 @@
-package services;
+package org.example.testtask.services;
 
-import model.Transaction;
+import org.example.testtask.model.Transaction;
 
 import java.util.List;
 
 public interface TransactionService {
-    void createTransaction(
-            Long readerId,
-            Long bookId
-    ) throws Exception;
+    void createTransaction(Transaction transaction) throws Exception;
 
     List<Transaction> getAllTransactions();
 

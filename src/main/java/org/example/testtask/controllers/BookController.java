@@ -1,15 +1,15 @@
-package controllers;
+package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import model.Book;
+import org.example.testtask.model.Book;
 import org.springframework.web.bind.annotation.*;
-import services.BookService;
+import org.example.testtask.services.BookService;
 
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/books")
+@RequestMapping("/api/books")
 public class BookController {
 
     private BookService service;

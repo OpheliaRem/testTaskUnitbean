@@ -1,9 +1,9 @@
-package controllers;
+package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import model.Reader;
+import org.example.testtask.model.Reader;
 import org.springframework.web.bind.annotation.*;
-import services.ReaderService;
+import org.example.testtask.services.ReaderService;
 
 import java.util.List;
 
@@ -37,6 +37,11 @@ public class ReaderController {
     @DeleteMapping("/delete/{id}")
     public void deleteReader(@PathVariable Long id) {
         service.deleteReader(id);
+    }
+
+    @GetMapping("/findMostReadingPerson")
+    public Reader getMostReadingReader() {
+        return service.getReaderWithMajorityOfTakenBooks();
     }
 
 }

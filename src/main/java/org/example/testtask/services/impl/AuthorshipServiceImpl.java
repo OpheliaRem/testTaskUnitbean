@@ -1,10 +1,10 @@
-package services.impl;
+package org.example.testtask.services.impl;
 
 import lombok.AllArgsConstructor;
-import model.Authorship;
+import org.example.testtask.model.Authorship;
 import org.springframework.stereotype.Service;
-import repositories.AuthorshipRepository;
-import services.AuthorshipService;
+import org.example.testtask.repositories.AuthorshipRepository;
+import org.example.testtask.services.AuthorshipService;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package services;
+package org.example.testtask.services;
 
-import model.Reader;
+import org.example.testtask.model.Reader;
 
 import java.util.List;
 
@@ -15,5 +15,7 @@ public interface ReaderService {
     void updateReader(Reader reader);
 
     void deleteReader(Long id);
+
+    Reader getReaderWithMajorityOfTakenBooks();
 
 }

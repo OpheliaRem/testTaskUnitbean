@@ -1,9 +1,9 @@
-package controllers;
+package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import model.Transaction;
+import org.example.testtask.model.Transaction;
 import org.springframework.web.bind.annotation.*;
-import services.TransactionService;
+import org.example.testtask.services.TransactionService;
 
 import java.util.List;
 
@@ -15,12 +15,9 @@ public class TransactionController {
     private TransactionService service;
 
     @PostMapping("/create")
-    public void createTransaction(
-            @RequestParam Long readerId,
-            @RequestParam Long bookId
-    ) {
+    public void createTransaction(@RequestBody Transaction transaction) {
         try {
-            service.createTransaction(readerId, bookId);
+            service.createTransaction(transaction);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

@@ -1,6 +1,6 @@
-package services;
+package org.example.testtask.services;
 
-import model.Authorship;
+import org.example.testtask.model.Authorship;
 
 import java.util.List;
 

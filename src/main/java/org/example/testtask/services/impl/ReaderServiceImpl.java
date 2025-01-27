@@ -1,10 +1,10 @@
-package services.impl;
+package org.example.testtask.services.impl;
 
 import lombok.AllArgsConstructor;
-import model.Reader;
+import org.example.testtask.model.Reader;
 import org.springframework.stereotype.Service;
-import repositories.ReaderRepository;
-import services.ReaderService;
+import org.example.testtask.repositories.ReaderRepository;
+import org.example.testtask.services.ReaderService;
 
 import java.util.List;
 
@@ -37,5 +37,10 @@ public class ReaderServiceImpl implements ReaderService {
     @Override
     public void deleteReader(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public Reader getReaderWithMajorityOfTakenBooks() {
+        return repository.getReaderWithMajorityOfTakenBooks();
     }
 }

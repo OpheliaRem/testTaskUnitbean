@@ -1,10 +1,10 @@
-package services.impl;
+package org.example.testtask.services.impl;
 
 import lombok.AllArgsConstructor;
-import model.Author;
+import org.example.testtask.model.Author;
 import org.springframework.stereotype.Service;
-import repositories.AuthorRepository;
-import services.AuthorService;
+import org.example.testtask.repositories.AuthorRepository;
+import org.example.testtask.services.AuthorService;
 
 import java.util.List;
 

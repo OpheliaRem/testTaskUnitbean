@@ -1,15 +1,15 @@
-package controllers;
+package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import model.Author;
+import org.example.testtask.model.Author;
 import org.springframework.web.bind.annotation.*;
-import services.AuthorService;
+import org.example.testtask.services.AuthorService;
 
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/authors")
+@AllArgsConstructor
 public class AuthorController {
 
     private AuthorService service;

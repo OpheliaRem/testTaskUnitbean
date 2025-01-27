@@ -1,6 +1,6 @@
-package services;
+package org.example.testtask.services;
 
-import model.Author;
+import org.example.testtask.model.Author;
 
 import java.util.List;
 

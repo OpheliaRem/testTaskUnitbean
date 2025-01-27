@@ -1,9 +1,9 @@
-package controllers;
+package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import model.Authorship;
+import org.example.testtask.model.Authorship;
 import org.springframework.web.bind.annotation.*;
-import services.AuthorshipService;
+import org.example.testtask.services.AuthorshipService;
 
 import java.util.List;
 
