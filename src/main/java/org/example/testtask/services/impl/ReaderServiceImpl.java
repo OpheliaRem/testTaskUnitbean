@@ -41,6 +41,12 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public Reader getReaderWithMajorityOfTakenBooks() {
-        return repository.getReaderWithMajorityOfTakenBooks();
+        return repository.findReaderWithMajorityOfTakenBooks();
     }
+
+    @Override
+    public List<Reader> getReadersSortedByUnreturnedBooks() {
+        return repository.findAllReadersSortedByUnreturnedBooks();
+    }
+
 }

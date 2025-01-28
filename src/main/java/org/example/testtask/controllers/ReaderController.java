@@ -44,4 +44,9 @@ public class ReaderController {
         return service.getReaderWithMajorityOfTakenBooks();
     }
 
+    @GetMapping("/findAllReadersSortedByUnreturnedBooks")
+    public List<Reader> getReadersSortedByUnreturnedBooks() {
+        return service.getReadersSortedByUnreturnedBooks();
+    }
+
 }

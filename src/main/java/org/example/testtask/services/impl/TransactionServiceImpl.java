@@ -38,7 +38,7 @@ public class TransactionServiceImpl implements TransactionService {
             throw new Exception("No such book found");
         }
 
-        var lastTransaction = repository.getLastTransactionWhereBookId(bookId);
+        var lastTransaction = repository.findLastTransactionWhereBookId(bookId);
 
         transaction.setTimeOfOperation(LocalDateTime.now());
 

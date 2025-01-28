@@ -18,4 +18,6 @@ public interface ReaderService {
 
     Reader getReaderWithMajorityOfTakenBooks();
 
+    List<Reader> getReadersSortedByUnreturnedBooks();
+
 }

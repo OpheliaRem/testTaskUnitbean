@@ -5,6 +5,7 @@ import org.example.testtask.model.Author;
 import org.springframework.web.bind.annotation.*;
 import org.example.testtask.services.AuthorService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -38,5 +39,13 @@ public class AuthorController {
     public void deleteAuthor(@PathVariable Long id) {
         service.deleteAuthor(id);
     }
+
+    @GetMapping("/findMostPopularAuthor")
+    public Author getMostPopularAuthor(
+            @RequestParam LocalDate startDate,
+            @RequestParam LocalDate endDate) {
+        return service.getMostPopularAuthor(startDate, endDate);
+    }
+
 
 }

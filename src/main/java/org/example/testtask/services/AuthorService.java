@@ -2,6 +2,7 @@ package org.example.testtask.services;
 
 import org.example.testtask.model.Author;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AuthorService {
@@ -15,5 +16,7 @@ public interface AuthorService {
     void updateAuthor(Author author);
 
     void deleteAuthor(Long id);
+
+    Author getMostPopularAuthor(LocalDate startDate, LocalDate endDate);
 
 }

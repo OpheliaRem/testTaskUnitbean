@@ -13,5 +13,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                     " order by time_of_operation desc limit 1",
             nativeQuery=true
     )
-    Transaction getLastTransactionWhereBookId(Long bookId);
+    Transaction findLastTransactionWhereBookId(Long bookId);
 }
