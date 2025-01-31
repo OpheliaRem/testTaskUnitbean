@@ -6,9 +6,11 @@ import org.example.testtask.repositories.BookRepository;
 import org.example.testtask.repositories.ReaderRepository;
 import org.example.testtask.repositories.TransactionRepository;
 import org.example.testtask.services.TransactionService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import javax.management.InvalidApplicationException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -22,7 +24,7 @@ public class TransactionServiceImpl implements TransactionService {
     ReaderRepository readerRepository;
 
     @Override
-    public void createTransaction(Transaction transaction) throws Exception {
+    public void createTransaction(Transaction transaction) {
 
         var readerId = transaction.getReader().getId();
         var bookId = transaction.getBook().getId();
@@ -31,11 +33,17 @@ public class TransactionServiceImpl implements TransactionService {
         var book = bookRepository.findById(bookId);
 
         if (reader.isEmpty()) {
-            throw new Exception("No such reader found");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Reader not found"
+            );
         }
 
         if (book.isEmpty()) {
-            throw new Exception("No such book found");
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "Book not found"
+            );
         }
 
         var lastTransaction = repository.findLastTransactionWhereBookId(bookId);
@@ -57,8 +65,9 @@ public class TransactionServiceImpl implements TransactionService {
             return;
         }
 
-        throw new InvalidApplicationException(
-                "Impossible to return a book taken by another reader"
+        throw new ResponseStatusException(
+                HttpStatusCode.valueOf(400),
+                "Impossible to take book already taken by someone"
         );
     }
 

@@ -16,11 +16,7 @@ public class TransactionController {
 
     @PostMapping("/create")
     public void createTransaction(@RequestBody Transaction transaction) {
-        try {
-            service.createTransaction(transaction);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        service.createTransaction(transaction);
     }
 
     @GetMapping("/findAll")

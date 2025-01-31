@@ -5,7 +5,7 @@ import org.example.testtask.model.Transaction;
 import java.util.List;
 
 public interface TransactionService {
-    void createTransaction(Transaction transaction) throws Exception;
+    void createTransaction(Transaction transaction);
 
     List<Transaction> getAllTransactions();
 
