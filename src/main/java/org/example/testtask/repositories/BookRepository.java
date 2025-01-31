@@ -13,5 +13,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
                     "where t.reader_id = :readerId and t.type='take'",
             nativeQuery = true
     )
-    Long countBooksByReaderId(Long readerId);
+    Long countTakenBooksByReaderId(Long readerId);
 }

@@ -47,7 +47,6 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public DTOMostReadingReaderAndNumberOfTakenBooks getReaderWithMajorityOfTakenBooks() {
-        //return repository.findReaderWithMajorityOfTakenBooks();
         var reader = repository.findReaderWithMajorityOfTakenBooks();
 
         if (reader == null) {
@@ -55,7 +54,7 @@ public class ReaderServiceImpl implements ReaderService {
         }
 
         var quantityOfBooksTakenByReader =
-                bookRepository.countBooksByReaderId(reader.getId());
+                bookRepository.countTakenBooksByReaderId(reader.getId());
 
         return new DTOMostReadingReaderAndNumberOfTakenBooks(reader, quantityOfBooksTakenByReader);
     }
