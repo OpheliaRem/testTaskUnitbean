@@ -1,5 +1,6 @@
 package org.example.testtask.services;
 
+import org.example.testtask.dtos.DTOMostReadingReaderAndNumberOfTakenBooks;
 import org.example.testtask.model.Reader;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public interface ReaderService {
 
     void deleteReader(Long id);
 
-    Reader getReaderWithMajorityOfTakenBooks();
+    DTOMostReadingReaderAndNumberOfTakenBooks getReaderWithMajorityOfTakenBooks();
 
     List<Reader> getReadersSortedByUnreturnedBooks();
 

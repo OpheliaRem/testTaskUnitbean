@@ -2,9 +2,14 @@ package org.example.testtask.services.impl;
 
 import lombok.AllArgsConstructor;
 import org.example.testtask.model.Reader;
+import org.example.testtask.repositories.BookRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.example.testtask.repositories.ReaderRepository;
 import org.example.testtask.services.ReaderService;
+import org.springframework.web.server.ResponseStatusException;
+
+import org.example.testtask.dtos.DTOMostReadingReaderAndNumberOfTakenBooks;
 
 import java.util.List;
 
@@ -13,6 +18,7 @@ import java.util.List;
 public class ReaderServiceImpl implements ReaderService {
 
     ReaderRepository repository;
+    BookRepository bookRepository;
 
     @Override
     public void createReader(Reader reader) {
@@ -40,8 +46,18 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public Reader getReaderWithMajorityOfTakenBooks() {
-        return repository.findReaderWithMajorityOfTakenBooks();
+    public DTOMostReadingReaderAndNumberOfTakenBooks getReaderWithMajorityOfTakenBooks() {
+        //return repository.findReaderWithMajorityOfTakenBooks();
+        var reader = repository.findReaderWithMajorityOfTakenBooks();
+
+        if (reader == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Reader not found");
+        }
+
+        var quantityOfBooksTakenByReader =
+                bookRepository.countBooksByReaderId(reader.getId());
+
+        return new DTOMostReadingReaderAndNumberOfTakenBooks(reader, quantityOfBooksTakenByReader);
     }
 
     @Override
