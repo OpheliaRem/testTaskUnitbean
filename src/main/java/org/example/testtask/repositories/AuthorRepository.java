@@ -11,16 +11,16 @@ import java.time.LocalDateTime;
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
     @Query(
-            value = "select a.id," +
-                    " a.first_name," +
-                    " a.last_name," +
-                    " a.date_of_birth" +
-                    " from authors a" +
-                    " inner join (select au.author_id from transactions t" +
-                    " inner join books b on b.id=t.book_id inner join authorship_units au" +
-                    " on au.book_id=b.id where t.type='take'" +
-                    " and t.time_of_operation between :start and :end " +
-                    "group by au.author_id order by count(*) desc limit 1) " +
+            value = "select a.* " +
+                    "from authors a " +
+                    "inner join " +
+                    "   (select au.author_id from transactions t " +
+                    "   inner join books b on b.id=t.book_id " +
+                    "       inner join authorship_units au " +
+                    "       on au.book_id=b.id " +
+                    "   where t.type='take' " +
+                "       and t.time_of_operation between :start and :end " +
+                "       group by au.author_id order by count(*) desc limit 1) " +
                     "ids on a.id=ids.author_id",
             nativeQuery = true
     )
