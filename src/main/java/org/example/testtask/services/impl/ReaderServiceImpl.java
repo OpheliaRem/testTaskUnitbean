@@ -1,6 +1,7 @@
 package org.example.testtask.services.impl;
 
 import lombok.AllArgsConstructor;
+import org.example.testtask.dtos.ReaderAndNumberOfUnreturnedBooksDTO;
 import org.example.testtask.model.Reader;
 import org.example.testtask.repositories.BookRepository;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import org.example.testtask.dtos.MostReadingReaderAndNumberOfTakenBooksDTO;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -60,8 +63,49 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public List<Reader> getReadersSortedByUnreturnedBooks() {
-        return repository.findAllReadersSortedByUnreturnedBooks();
+    public List<ReaderAndNumberOfUnreturnedBooksDTO> getReadersSortedByUnreturnedBooks() {
+        var readers = repository.findAllReadersSortedByUnreturnedBooks();
+
+        var numbersOfTakenBooks = new HashMap<Long, Long>();
+        var numbersOfReturnedBooks = new HashMap<Long, Long>();
+
+        readers.forEach(
+                (reader) -> {
+                    numbersOfTakenBooks.put(
+                            reader.getId(),
+                            bookRepository.countTakenBooksByReaderId(reader.getId()));
+
+                    numbersOfReturnedBooks.put(
+                            reader.getId(),
+                            bookRepository.countReturnedBooksByReaderId(reader.getId())
+                    );
+                }
+        );
+
+        var numbersOfUnreturnedBooks = new HashMap<Long, Long>();
+
+        readers.forEach(
+                (reader) ->
+                        numbersOfUnreturnedBooks.put(
+                                reader.getId(),
+                                numbersOfTakenBooks.get(reader.getId()) -
+                                numbersOfReturnedBooks.get(reader.getId())
+                        )
+        );
+
+        var readersAndUnreturnedBooks =
+                new ArrayList<ReaderAndNumberOfUnreturnedBooksDTO>();
+
+        readers.forEach(
+                (reader) -> readersAndUnreturnedBooks.add(
+                        new ReaderAndNumberOfUnreturnedBooksDTO(
+                                reader,
+                                numbersOfUnreturnedBooks.get(reader.getId())
+                        )
+                )
+        );
+
+        return readersAndUnreturnedBooks;
     }
 
 }

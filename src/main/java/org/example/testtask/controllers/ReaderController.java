@@ -2,6 +2,7 @@ package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
 import org.example.testtask.dtos.MostReadingReaderAndNumberOfTakenBooksDTO;
+import org.example.testtask.dtos.ReaderAndNumberOfUnreturnedBooksDTO;
 import org.example.testtask.model.Reader;
 import org.springframework.web.bind.annotation.*;
 import org.example.testtask.services.ReaderService;
@@ -46,7 +47,7 @@ public class ReaderController {
     }
 
     @GetMapping("/findAllReadersSortedByUnreturnedBooks")
-    public List<Reader> getReadersSortedByUnreturnedBooks() {
+    public List<ReaderAndNumberOfUnreturnedBooksDTO> getReadersSortedByUnreturnedBooks() {
         return service.getReadersSortedByUnreturnedBooks();
     }
 

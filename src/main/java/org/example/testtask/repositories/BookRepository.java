@@ -14,4 +14,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             nativeQuery = true
     )
     Long countTakenBooksByReaderId(Long readerId);
+
+    @Query(
+            value = "select count(*) from books b " +
+                    "inner join transactions t on b.id = t.book_id " +
+                    "where t.reader_id = :readerId and t.type='give back'",
+            nativeQuery = true
+    )
+    Long countReturnedBooksByReaderId(Long readerId);
 }
