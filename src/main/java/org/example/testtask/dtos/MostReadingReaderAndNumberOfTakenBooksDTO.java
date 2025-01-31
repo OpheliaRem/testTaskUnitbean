@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.example.testtask.model.Reader;
 
 @Data
-public class DTOMostReadingReaderAndNumberOfTakenBooks {
+public class MostReadingReaderAndNumberOfTakenBooksDTO {
 
     @NonNull
     Reader reader;

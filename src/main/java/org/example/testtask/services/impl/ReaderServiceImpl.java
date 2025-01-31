@@ -9,7 +9,7 @@ import org.example.testtask.repositories.ReaderRepository;
 import org.example.testtask.services.ReaderService;
 import org.springframework.web.server.ResponseStatusException;
 
-import org.example.testtask.dtos.DTOMostReadingReaderAndNumberOfTakenBooks;
+import org.example.testtask.dtos.MostReadingReaderAndNumberOfTakenBooksDTO;
 
 import java.util.List;
 
@@ -46,7 +46,7 @@ public class ReaderServiceImpl implements ReaderService {
     }
 
     @Override
-    public DTOMostReadingReaderAndNumberOfTakenBooks getReaderWithMajorityOfTakenBooks() {
+    public MostReadingReaderAndNumberOfTakenBooksDTO getReaderWithMajorityOfTakenBooks() {
         var reader = repository.findReaderWithMajorityOfTakenBooks();
 
         if (reader == null) {
@@ -56,7 +56,7 @@ public class ReaderServiceImpl implements ReaderService {
         var quantityOfBooksTakenByReader =
                 bookRepository.countTakenBooksByReaderId(reader.getId());
 
-        return new DTOMostReadingReaderAndNumberOfTakenBooks(reader, quantityOfBooksTakenByReader);
+        return new MostReadingReaderAndNumberOfTakenBooksDTO(reader, quantityOfBooksTakenByReader);
     }
 
     @Override
