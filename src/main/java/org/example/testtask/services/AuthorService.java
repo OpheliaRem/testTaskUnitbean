@@ -1,22 +1,51 @@
 package org.example.testtask.services;
 
+import lombok.AllArgsConstructor;
+import org.example.testtask.dtos.AuthorDTO;
 import org.example.testtask.model.Author;
+import org.example.testtask.repositories.AuthorRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public interface AuthorService {
+@Service
+@AllArgsConstructor
+public class AuthorService {
 
-    void createAuthor(Author author);
+    AuthorRepository repository;
 
-    List<Author> getAllAuthors();
+    public AuthorDTO createAuthor(Author author) {
+        return new AuthorDTO(repository.save(author));
+    }
 
-    Author getAuthor(Long id);
+    public List<AuthorDTO> getAllAuthors() {
+        var authors = repository.findAll();
+        return authors.stream().map(AuthorDTO::new).toList();
+    }
 
-    void updateAuthor(Author author);
+    public AuthorDTO getAuthor(Long id) {
+        var author = repository.findById(id).orElse(null);
 
-    void deleteAuthor(Long id);
+        if (author == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "author not found");
+        }
 
-    Author getMostPopularAuthor(LocalDate startDate, LocalDate endDate);
+        return new AuthorDTO(author);
+    }
 
+    public AuthorDTO getMostPopularAuthor(
+            LocalDateTime startDateTime,
+            LocalDateTime endDateTime
+    ) {
+
+        var author = repository.getAuthorByQuantityOfTakeTransactions(
+                startDateTime,
+                endDateTime
+        );
+
+        return new AuthorDTO(author);
+    }
 }

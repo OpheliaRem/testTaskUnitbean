@@ -1,25 +1,52 @@
 package org.example.testtask.services;
 
-import org.example.testtask.dtos.MostReadingReaderAndNumberOfTakenBooksDTO;
-import org.example.testtask.dtos.ReaderAndNumberOfUnreturnedBooksDTO;
+import lombok.AllArgsConstructor;
+import org.example.testtask.dtos.ReaderDTO;
 import org.example.testtask.model.Reader;
+import org.example.testtask.repositories.ReaderRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-public interface ReaderService {
+@Service
+@AllArgsConstructor
+public class ReaderService {
 
-    void createReader(Reader reader);
+    ReaderRepository repository;
 
-    List<Reader> getAllReaders();
+    public ReaderDTO createReader(Reader reader) {
+        return new ReaderDTO(repository.save(reader));
+    }
 
-    Reader getReader(Long id);
+    public List<ReaderDTO> getAllReaders() {
+        var readers = repository.findAll();
 
-    void updateReader(Reader reader);
+        return readers.stream().map(ReaderDTO::new).toList();
+    }
 
-    void deleteReader(Long id);
+    public ReaderDTO getReader(Long id) {
+        var reader = repository.findById(id).orElse(null);
 
-    MostReadingReaderAndNumberOfTakenBooksDTO getReaderWithMajorityOfTakenBooks();
+        if (reader == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "reader not found");
+        }
 
-    List<ReaderAndNumberOfUnreturnedBooksDTO> getReadersSortedByUnreturnedBooks();
+        return new ReaderDTO(reader);
+    }
+
+    public ReaderDTO getReaderWithMajorityOfTakenBooks() {
+
+        var reader = repository.findReaderWithMajorityOfTakenBooks();
+
+        return new ReaderDTO(reader);
+    }
+
+    public List<ReaderDTO> getReadersSortedByUnreturnedBooks() {
+        List<Reader> readers = repository.findAllReadersSortedByUnreturnedBooks();
+
+        return readers.stream().map(ReaderDTO::new).toList();
+    }
 
 }

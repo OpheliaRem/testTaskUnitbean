@@ -18,7 +18,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
                     "   inner join books b on b.id=t.book_id " +
                     "       inner join authorship_units au " +
                     "       on au.book_id=b.id " +
-                    "   where t.type='take' " +
+                    "   where t.type=0 " +
                 "       and t.time_of_operation between :start and :end " +
                 "       group by au.author_id order by count(*) desc limit 1) " +
                     "ids on a.id=ids.author_id",

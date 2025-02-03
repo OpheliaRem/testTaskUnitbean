@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.testtask.model.TransactionType.TransactionType;
 
 import java.time.LocalDateTime;
 
@@ -20,7 +21,7 @@ public class Transaction {
     private Long id;
 
     @Column(name = "type", nullable = false)
-    private String type;
+    private TransactionType type;
 
     @Column(name = "time_of_operation", nullable = false)
     private LocalDateTime timeOfOperation;

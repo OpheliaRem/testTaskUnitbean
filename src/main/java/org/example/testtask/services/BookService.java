@@ -1,19 +1,38 @@
 package org.example.testtask.services;
 
+import lombok.AllArgsConstructor;
+import org.example.testtask.dtos.BookDTO;
 import org.example.testtask.model.Book;
+import org.example.testtask.repositories.BookRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-public interface BookService {
+@Service
+@AllArgsConstructor
+public class BookService {
 
-    void createBook(Book book);
+    BookRepository repository;
 
-    List<Book> getAllBooks();
+    public BookDTO createBook(Book book) {
+        return new BookDTO(repository.save(book));
+    }
 
-    Book getBook(Long id);
+    public List<BookDTO> getAllBooks() {
+        var books = repository.findAll();
 
-    void updateBook(Book book);
+        return books.stream().map(BookDTO::new).toList();
+    }
 
-    void deleteBook(Long id);
+    public BookDTO getBook(Long id) {
+        var book = repository.findById(id).orElse(null);
 
+        if (book == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found");
+        }
+
+        return new BookDTO(book);
+    }
 }
