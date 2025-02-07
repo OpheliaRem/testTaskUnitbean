@@ -16,7 +16,13 @@ public class BookService {
 
     BookRepository repository;
 
-    public BookDTO createBook(Book book) {
+    public BookDTO createBook(BookDTO bookDTO) {
+        Book book = new Book(
+                bookDTO.getId(),
+                bookDTO.getTitle(),
+                bookDTO.getDateOfPublishing()
+        );
+
         return new BookDTO(repository.save(book));
     }
 
@@ -27,11 +33,9 @@ public class BookService {
     }
 
     public BookDTO getBook(Long id) {
-        var book = repository.findById(id).orElse(null);
-
-        if (book == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found");
-        }
+        var book = repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found")
+        );
 
         return new BookDTO(book);
     }

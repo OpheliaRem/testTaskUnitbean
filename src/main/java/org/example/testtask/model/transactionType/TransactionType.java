@@ -1,4 +1,4 @@
-package org.example.testtask.model.TransactionType;
+package org.example.testtask.model.transactionType;
 
 public enum TransactionType {
     TAKE,

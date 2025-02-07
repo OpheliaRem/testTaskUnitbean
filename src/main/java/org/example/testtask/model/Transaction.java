@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.example.testtask.model.TransactionType.TransactionType;
+import org.example.testtask.model.transactionType.TransactionType;
 
 import java.time.LocalDateTime;
 

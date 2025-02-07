@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,7 +18,14 @@ public class AuthorService {
 
     AuthorRepository repository;
 
-    public AuthorDTO createAuthor(Author author) {
+    public AuthorDTO createAuthor(AuthorDTO authorDTO) {
+        Author author = new Author(
+                authorDTO.getId(),
+                authorDTO.getFirstName(),
+                authorDTO.getLastName(),
+                authorDTO.getDateOfBirth()
+        );
+
         return new AuthorDTO(repository.save(author));
     }
 
@@ -27,23 +35,21 @@ public class AuthorService {
     }
 
     public AuthorDTO getAuthor(Long id) {
-        var author = repository.findById(id).orElse(null);
-
-        if (author == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "author not found");
-        }
+        var author = repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "author not found")
+        );
 
         return new AuthorDTO(author);
     }
 
     public AuthorDTO getMostPopularAuthor(
-            LocalDateTime startDateTime,
-            LocalDateTime endDateTime
+            LocalDate startDate,
+            LocalDate endDate
     ) {
 
         var author = repository.getAuthorByQuantityOfTakeTransactions(
-                startDateTime,
-                endDateTime
+                startDate,
+                endDate
         );
 
         return new AuthorDTO(author);

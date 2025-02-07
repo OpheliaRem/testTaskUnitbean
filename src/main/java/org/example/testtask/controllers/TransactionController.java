@@ -2,7 +2,6 @@ package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
 import org.example.testtask.dtos.TransactionDTO;
-import org.example.testtask.model.Transaction;
 import org.example.testtask.services.TransactionService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,8 @@ public class TransactionController {
     private TransactionService service;
 
     @PostMapping("/create")
-    public TransactionDTO createTransaction(@RequestBody Transaction transaction) {
-        return service.createTransaction(transaction);
+    public TransactionDTO createTransaction(@RequestBody TransactionDTO transactionDTO) {
+        return service.createTransaction(transactionDTO);
     }
 
     @GetMapping("/findAll")

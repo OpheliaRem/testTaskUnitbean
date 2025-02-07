@@ -16,7 +16,16 @@ public class ReaderService {
 
     ReaderRepository repository;
 
-    public ReaderDTO createReader(Reader reader) {
+    public ReaderDTO createReader(ReaderDTO readerDTO) {
+        Reader reader = new Reader(
+                readerDTO.getId(),
+                readerDTO.getFirstName(),
+                readerDTO.getLastName(),
+                readerDTO.getGender(),
+                readerDTO.getDateOfBirth(),
+                readerDTO.getPhoneNumber()
+        );
+
         return new ReaderDTO(repository.save(reader));
     }
 
@@ -27,11 +36,9 @@ public class ReaderService {
     }
 
     public ReaderDTO getReader(Long id) {
-        var reader = repository.findById(id).orElse(null);
-
-        if (reader == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "reader not found");
-        }
+        var reader = repository.findById(id).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "reader not found")
+        );
 
         return new ReaderDTO(reader);
     }

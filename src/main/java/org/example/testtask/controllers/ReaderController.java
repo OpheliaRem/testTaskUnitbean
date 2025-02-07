@@ -2,7 +2,6 @@ package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
 import org.example.testtask.dtos.ReaderDTO;
-import org.example.testtask.model.Reader;
 import org.example.testtask.services.ReaderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +15,8 @@ public class ReaderController {
     private ReaderService service;
 
     @PostMapping("/create")
-    public ReaderDTO createReader(@RequestBody Reader reader) {
-        return service.createReader(reader);
+    public ReaderDTO createReader(@RequestBody ReaderDTO readerDTO) {
+        return service.createReader(readerDTO);
     }
 
     @GetMapping("/findAll")
