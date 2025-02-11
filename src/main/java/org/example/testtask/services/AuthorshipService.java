@@ -1,11 +1,11 @@
 package org.example.testtask.services;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.AuthorshipDTO;
-import org.example.testtask.model.Author;
+import org.example.testtask.dtos.AuthorshipDto;
 import org.example.testtask.model.Authorship;
-import org.example.testtask.model.Book;
+import org.example.testtask.repositories.AuthorRepository;
 import org.example.testtask.repositories.AuthorshipRepository;
+import org.example.testtask.repositories.BookRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,37 +17,35 @@ import java.util.List;
 public class AuthorshipService {
 
     AuthorshipRepository repository;
+    AuthorRepository authorRepository;
+    BookRepository bookRepository;
 
-    public AuthorshipDTO createAuthorship(AuthorshipDTO authorshipDTO) {
-        Author author = new Author(
-                authorshipDTO.getAuthorDTO().getId(),
-                authorshipDTO.getAuthorDTO().getFirstName(),
-                authorshipDTO.getAuthorDTO().getLastName(),
-                authorshipDTO.getAuthorDTO().getDateOfBirth()
+    public AuthorshipDto createAuthorship(AuthorshipDto authorshipDto) {
+
+        var author = authorRepository.findById(authorshipDto.getAuthorId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "author not found")
         );
 
-        Book book = new Book(
-                authorshipDTO.getBookDTO().getId(),
-                authorshipDTO.getBookDTO().getTitle(),
-                authorshipDTO.getBookDTO().getDateOfPublishing()
+        var book = bookRepository.findById(authorshipDto.getBookId()).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found")
         );
 
         Authorship authorship = new Authorship(
-                authorshipDTO.getId(),
+                authorshipDto.getId(),
                 author,
                 book
         );
 
-        return new AuthorshipDTO(repository.save(authorship));
+        return new AuthorshipDto(repository.save(authorship));
     }
 
-    public List<AuthorshipDTO> getAllAuthorshipUnits() {
+    public List<AuthorshipDto> getAllAuthorshipUnits() {
         var authorshipUnits = repository.findAll();
 
-        return authorshipUnits.stream().map(AuthorshipDTO::new).toList();
+        return authorshipUnits.stream().map(AuthorshipDto::new).toList();
     }
 
-    public AuthorshipDTO getAuthorship(Long id) {
+    public AuthorshipDto getAuthorship(Long id) {
 
         var authorship = repository.findById(id).orElseThrow(
                 () ->  new ResponseStatusException(
@@ -62,6 +60,6 @@ public class AuthorshipService {
             );
         }
 
-        return new AuthorshipDTO(authorship);
+        return new AuthorshipDto(authorship);
     }
 }

@@ -1,13 +1,15 @@
 package org.example.testtask.dtos;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.testtask.model.Reader;
 import org.example.testtask.model.gender.Gender;
 
 import java.time.LocalDate;
 
 @Data
-public class ReaderDTO {
+@NoArgsConstructor
+public class ReaderDto {
 
     private Long id;
 
@@ -21,7 +23,7 @@ public class ReaderDTO {
 
     private String phoneNumber;
 
-    public ReaderDTO(Reader reader) {
+    public ReaderDto(Reader reader) {
         id = reader.getId();
         firstName = reader.getFirstName();
         lastName = reader.getLastName();

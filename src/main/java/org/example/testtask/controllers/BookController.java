@@ -1,7 +1,7 @@
 package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.BookDTO;
+import org.example.testtask.dtos.BookDto;
 import org.example.testtask.services.BookService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +15,17 @@ public class BookController {
     private BookService service;
 
     @PostMapping("/create")
-    public BookDTO createBook(@RequestBody BookDTO bookDTO) {
+    public BookDto createBook(@RequestBody BookDto bookDTO) {
         return service.createBook(bookDTO);
     }
 
     @GetMapping("/findAll")
-    public List<BookDTO> getAllBooks() {
+    public List<BookDto> getAllBooks() {
         return service.getAllBooks();
     }
 
     @GetMapping("/find/{id}")
-    public BookDTO getBook(@PathVariable Long id) {
+    public BookDto getBook(@PathVariable Long id) {
         return service.getBook(id);
     }
 

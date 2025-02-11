@@ -1,4 +1,4 @@
-package org.example.testtask.config;
+package org.example.testtask.security;
 
 import org.example.testtask.model.Employee;
 import org.springframework.security.core.GrantedAuthority;
@@ -7,14 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-public class EmployeeDetails implements UserDetails {
-
-    private final Employee employee;
-
-    public EmployeeDetails(Employee employee) {
-        this.employee = employee;
-    }
-
+public record CustomUserDetails(Employee employee) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
@@ -27,6 +20,6 @@ public class EmployeeDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return employee.getLogin();
+        return employee.getUsername();
     }
 }

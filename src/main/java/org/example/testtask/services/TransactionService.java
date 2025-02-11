@@ -1,9 +1,7 @@
 package org.example.testtask.services;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.TransactionDTO;
-import org.example.testtask.model.Book;
-import org.example.testtask.model.Reader;
+import org.example.testtask.dtos.TransactionDto;
 import org.example.testtask.model.Transaction;
 import org.example.testtask.model.transactionType.TransactionType;
 import org.example.testtask.repositories.BookRepository;
@@ -26,50 +24,25 @@ public class TransactionService {
     BookRepository bookRepository;
     ReaderRepository readerRepository;
 
-    public TransactionDTO createTransaction(TransactionDTO transactionDTO) {
+    public TransactionDto createTransaction(TransactionDto transactionDto) {
 
-        Book bookFromDTO = new Book(
-                transactionDTO.getBookDTO().getId(),
-                transactionDTO.getBookDTO().getTitle(),
-                transactionDTO.getBookDTO().getDateOfPublishing()
+        var readerId = transactionDto.getReaderId();
+        var bookId = transactionDto.getBookId();
+
+        var reader = readerRepository.findById(readerId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "reader not found")
+        );
+        var book = bookRepository.findById(bookId).orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found")
         );
 
-        Reader readerFromDTO = new Reader(
-                transactionDTO.getReaderDTO().getId(),
-                transactionDTO.getReaderDTO().getFirstName(),
-                transactionDTO.getReaderDTO().getLastName(),
-                transactionDTO.getReaderDTO().getGender(),
-                transactionDTO.getReaderDTO().getDateOfBirth(),
-                transactionDTO.getReaderDTO().getPhoneNumber()
+        var transaction = new Transaction(
+                transactionDto.getId(),
+                transactionDto.getType(),
+                transactionDto.getTimeOfOperation(),
+                reader,
+                book
         );
-
-        Transaction transaction = new Transaction(
-                transactionDTO.getId(),
-                transactionDTO.getType(),
-                transactionDTO.getTimeOfOperation(),
-                readerFromDTO,
-                bookFromDTO
-        );
-
-        var readerId = transaction.getReader().getId();
-        var bookId = transaction.getBook().getId();
-
-        var reader = readerRepository.findById(readerId);
-        var book = bookRepository.findById(bookId);
-
-        if (reader.isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Reader not found"
-            );
-        }
-
-        if (book.isEmpty()) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "Book not found"
-            );
-        }
 
         var lastTransaction = repository.findLastTransactionWhereBookId(bookId);
 
@@ -79,12 +52,12 @@ public class TransactionService {
                         Objects.equals(lastTransaction.getType(), TransactionType.RETURN)
         ) {
             transaction.setType(TransactionType.TAKE);
-            return new TransactionDTO(repository.save(transaction));
+            return new TransactionDto(repository.save(transaction));
         }
 
         if (readerId.equals(lastTransaction.getReader().getId())) {
             transaction.setType(TransactionType.RETURN);
-            return new TransactionDTO(repository.save(transaction));
+            return new TransactionDto(repository.save(transaction));
         }
 
         throw new ResponseStatusException(
@@ -93,16 +66,16 @@ public class TransactionService {
         );
     }
 
-    public List<TransactionDTO> getAllTransactions() {
+    public List<TransactionDto> getAllTransactions() {
         var transactions = repository.findAll();
-        return transactions.stream().map(TransactionDTO::new).toList();
+        return transactions.stream().map(TransactionDto::new).toList();
     }
 
-    public TransactionDTO getTransaction(Long id) {
+    public TransactionDto getTransaction(Long id) {
         var transaction = repository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "transaction not found")
         );
 
-        return new TransactionDTO(transaction);
+        return new TransactionDto(transaction);
     }
 }

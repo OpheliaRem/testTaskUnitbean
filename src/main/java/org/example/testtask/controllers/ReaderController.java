@@ -1,7 +1,7 @@
 package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.ReaderDTO;
+import org.example.testtask.dtos.ReaderDto;
 import org.example.testtask.services.ReaderService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,27 +15,27 @@ public class ReaderController {
     private ReaderService service;
 
     @PostMapping("/create")
-    public ReaderDTO createReader(@RequestBody ReaderDTO readerDTO) {
+    public ReaderDto createReader(@RequestBody ReaderDto readerDTO) {
         return service.createReader(readerDTO);
     }
 
     @GetMapping("/findAll")
-    public List<ReaderDTO> getAllReaders() {
+    public List<ReaderDto> getAllReaders() {
         return service.getAllReaders();
     }
 
     @GetMapping("/find/{id}")
-    public ReaderDTO getReader(@PathVariable Long id) {
+    public ReaderDto getReader(@PathVariable Long id) {
         return service.getReader(id);
     }
 
     @GetMapping("/findMostReadingPerson")
-    public ReaderDTO getMostReadingReader() {
+    public ReaderDto getMostReadingReader() {
         return service.getReaderWithMajorityOfTakenBooks();
     }
 
     @GetMapping("/findAllReadersSortedByUnreturnedBooks")
-    public List<ReaderDTO> getReadersSortedByUnreturnedBooks() {
+    public List<ReaderDto> getReadersSortedByUnreturnedBooks() {
         return service.getReadersSortedByUnreturnedBooks();
     }
 

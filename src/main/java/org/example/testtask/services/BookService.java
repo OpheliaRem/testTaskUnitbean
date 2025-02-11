@@ -1,7 +1,7 @@
 package org.example.testtask.services;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.BookDTO;
+import org.example.testtask.dtos.BookDto;
 import org.example.testtask.model.Book;
 import org.example.testtask.repositories.BookRepository;
 import org.springframework.http.HttpStatus;
@@ -16,27 +16,27 @@ public class BookService {
 
     BookRepository repository;
 
-    public BookDTO createBook(BookDTO bookDTO) {
+    public BookDto createBook(BookDto bookDto) {
         Book book = new Book(
-                bookDTO.getId(),
-                bookDTO.getTitle(),
-                bookDTO.getDateOfPublishing()
+                bookDto.getId(),
+                bookDto.getTitle(),
+                bookDto.getDateOfPublishing()
         );
 
-        return new BookDTO(repository.save(book));
+        return new BookDto(repository.save(book));
     }
 
-    public List<BookDTO> getAllBooks() {
+    public List<BookDto> getAllBooks() {
         var books = repository.findAll();
 
-        return books.stream().map(BookDTO::new).toList();
+        return books.stream().map(BookDto::new).toList();
     }
 
-    public BookDTO getBook(Long id) {
+    public BookDto getBook(Long id) {
         var book = repository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "book not found")
         );
 
-        return new BookDTO(book);
+        return new BookDto(book);
     }
 }

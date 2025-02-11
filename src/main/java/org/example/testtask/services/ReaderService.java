@@ -1,7 +1,7 @@
 package org.example.testtask.services;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.ReaderDTO;
+import org.example.testtask.dtos.ReaderDto;
 import org.example.testtask.model.Reader;
 import org.example.testtask.repositories.ReaderRepository;
 import org.springframework.http.HttpStatus;
@@ -16,44 +16,44 @@ public class ReaderService {
 
     ReaderRepository repository;
 
-    public ReaderDTO createReader(ReaderDTO readerDTO) {
+    public ReaderDto createReader(ReaderDto readerDto) {
         Reader reader = new Reader(
-                readerDTO.getId(),
-                readerDTO.getFirstName(),
-                readerDTO.getLastName(),
-                readerDTO.getGender(),
-                readerDTO.getDateOfBirth(),
-                readerDTO.getPhoneNumber()
+                readerDto.getId(),
+                readerDto.getFirstName(),
+                readerDto.getLastName(),
+                readerDto.getGender(),
+                readerDto.getDateOfBirth(),
+                readerDto.getPhoneNumber()
         );
 
-        return new ReaderDTO(repository.save(reader));
+        return new ReaderDto(repository.save(reader));
     }
 
-    public List<ReaderDTO> getAllReaders() {
+    public List<ReaderDto> getAllReaders() {
         var readers = repository.findAll();
 
-        return readers.stream().map(ReaderDTO::new).toList();
+        return readers.stream().map(ReaderDto::new).toList();
     }
 
-    public ReaderDTO getReader(Long id) {
+    public ReaderDto getReader(Long id) {
         var reader = repository.findById(id).orElseThrow(
                 () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "reader not found")
         );
 
-        return new ReaderDTO(reader);
+        return new ReaderDto(reader);
     }
 
-    public ReaderDTO getReaderWithMajorityOfTakenBooks() {
+    public ReaderDto getReaderWithMajorityOfTakenBooks() {
 
         var reader = repository.findReaderWithMajorityOfTakenBooks();
 
-        return new ReaderDTO(reader);
+        return new ReaderDto(reader);
     }
 
-    public List<ReaderDTO> getReadersSortedByUnreturnedBooks() {
+    public List<ReaderDto> getReadersSortedByUnreturnedBooks() {
         List<Reader> readers = repository.findAllReadersSortedByUnreturnedBooks();
 
-        return readers.stream().map(ReaderDTO::new).toList();
+        return readers.stream().map(ReaderDto::new).toList();
     }
 
 }

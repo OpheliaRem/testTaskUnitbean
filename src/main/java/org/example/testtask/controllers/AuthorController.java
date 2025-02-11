@@ -1,7 +1,7 @@
 package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.AuthorDTO;
+import org.example.testtask.dtos.AuthorDto;
 import org.example.testtask.services.AuthorService;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,22 +16,22 @@ public class AuthorController {
     private AuthorService service;
 
     @PostMapping("/create")
-    public AuthorDTO createAuthor(@RequestBody AuthorDTO authorDTO) {
+    public AuthorDto createAuthor(@RequestBody AuthorDto authorDTO) {
         return service.createAuthor(authorDTO);
     }
 
     @GetMapping("/findAll")
-    public List<AuthorDTO> getAllAuthors() {
+    public List<AuthorDto> getAllAuthors() {
         return service.getAllAuthors();
     }
 
     @GetMapping("/find/{id}")
-    public AuthorDTO getAuthor(@PathVariable Long id) {
+    public AuthorDto getAuthor(@PathVariable Long id) {
         return service.getAuthor(id);
     }
 
     @GetMapping("/findMostPopularAuthor")
-    public AuthorDTO getMostPopularAuthor(
+    public AuthorDto getMostPopularAuthor(
             @RequestParam LocalDate startDate,
             @RequestParam LocalDate endDate) {
         return service.getMostPopularAuthor(startDate, endDate);

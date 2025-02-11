@@ -1,13 +1,15 @@
 package org.example.testtask.dtos;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.testtask.model.Transaction;
 import org.example.testtask.model.transactionType.TransactionType;
 
 import java.time.LocalDateTime;
 
 @Data
-public class TransactionDTO {
+@NoArgsConstructor
+public class TransactionDto {
 
     private Long id;
 
@@ -15,16 +17,17 @@ public class TransactionDTO {
 
     private LocalDateTime timeOfOperation;
 
-    private ReaderDTO readerDTO;
+    private Long readerId;
 
-    private BookDTO bookDTO;
+    private Long bookId;
 
-    public TransactionDTO(Transaction transaction) {
+
+    public TransactionDto(Transaction transaction) {
         id = transaction.getId();
         type = transaction.getType();
         timeOfOperation = transaction.getTimeOfOperation();
-        readerDTO = new ReaderDTO(transaction.getReader());
-        bookDTO = new BookDTO(transaction.getBook());
+        readerId = transaction.getReader().getId();
+        bookId = transaction.getBook().getId();
     }
 
 }

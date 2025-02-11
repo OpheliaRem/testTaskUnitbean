@@ -17,8 +17,8 @@ public class Employee {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "login")
-    private String login;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "password")
     private String password;

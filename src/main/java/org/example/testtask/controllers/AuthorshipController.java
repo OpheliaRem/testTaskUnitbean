@@ -1,7 +1,7 @@
 package org.example.testtask.controllers;
 
 import lombok.AllArgsConstructor;
-import org.example.testtask.dtos.AuthorshipDTO;
+import org.example.testtask.dtos.AuthorshipDto;
 import org.example.testtask.services.AuthorshipService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,17 +15,17 @@ public class AuthorshipController {
     private AuthorshipService service;
 
     @PostMapping("/create")
-    public AuthorshipDTO createAuthorship(@RequestBody AuthorshipDTO authorshipDTO) {
+    public AuthorshipDto createAuthorship(@RequestBody AuthorshipDto authorshipDTO) {
         return service.createAuthorship(authorshipDTO);
     }
 
     @GetMapping("/findAll")
-    public List<AuthorshipDTO> getAllAuthorshipUnits() {
+    public List<AuthorshipDto> getAllAuthorshipUnits() {
         return service.getAllAuthorshipUnits();
     }
 
     @GetMapping("/find/{id}")
-    public AuthorshipDTO getAuthorship(@PathVariable Long id) {
+    public AuthorshipDto getAuthorship(@PathVariable Long id) {
         return service.getAuthorship(id);
     }
 

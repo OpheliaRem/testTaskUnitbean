@@ -1,12 +1,14 @@
 package org.example.testtask.dtos;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.testtask.model.Author;
 
 import java.time.LocalDate;
 
 @Data
-public class AuthorDTO {
+@NoArgsConstructor
+public class AuthorDto {
 
     private Long id;
 
@@ -16,7 +18,7 @@ public class AuthorDTO {
 
     private LocalDate dateOfBirth;
 
-    public AuthorDTO(Author author) {
+    public AuthorDto(Author author) {
         id = author.getId();
         firstName = author.getFirstName();
         lastName = author.getLastName();
