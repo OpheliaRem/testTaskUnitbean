@@ -28,7 +28,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth.requestMatchers(
-                        "/api/employees/**",
+                        "/api/employees/register",
+                            "/api/employees/signIn",
+                            "/api/employees/refresh",
                                 "/api/readers/findAllReadersSortedByUnreturnedBooks"
                 ).permitAll()
                                 .requestMatchers("/**").authenticated())
